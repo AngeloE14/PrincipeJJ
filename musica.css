@@ -1,0 +1,165 @@
+/* ============================================================
+   HOMENAJE A JOSÉ JOSÉ — Estilos del botón de música
+   ------------------------------------------------------------
+   Todo lo relacionado con el reproductor de fondo que vive en el
+   .site-header: el botón redondo, las "ondas musicales" (barras),
+   el desplazamiento del título de la canción y sus animaciones.
+   El resto del diseño está en styles.css.
+   ============================================================ */
+
+/* Necesario para posicionar el botón en el centro del encabezado
+   (el botón usa position:absolute y este contenedor debe ser relativo). */
+.site-header { position: relative; }
+
+/* BOTÓN PRINCIPAL
+   Es un elemento <button> estilizado como cápsula redondeada.
+   position:absolute + left/top 50% + translate(-50%,-50%) lo centran
+   en medio de la barra del encabezado. */
+.boton-musica {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;      /* contenido (ondas + título) en fila */
+  align-items: center;
+  gap: 11px;
+  width: max-content;        /* la cápsula se ajusta a su contenido */
+  min-width: 210px;
+  max-width: min(300px, calc(100vw - 150px));
+  padding: 10px 16px 10px 14px;
+  border: 1px solid rgba(176, 138, 74, .72);  /* borde dorado tenue */
+  border-radius: 999px;      /* radio grande = forma de píldora */
+  background: linear-gradient(110deg, rgba(176, 138, 74, .2), rgba(17, 17, 17, .96) 63%);
+  color: var(--cream);       /* texto crema (variable definida en styles.css) */
+  cursor: pointer;
+  font: 500 10px var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  /* Doble sombra: una interior dorada sutil + una exterior para elevarlo. */
+  box-shadow: inset 0 0 22px rgba(176, 138, 74, .08), 0 8px 28px rgba(0, 0, 0, .3);
+  /* Transiciones suaves al pasar el ratón o activarse. */
+  transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, color .25s ease;
+  /* Optimizaciones táctiles: el toque responde al instante (sin la demora
+     del doble-tap) y no aparece el brillo azulado del navegador al pulsar. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ICONO "SIGUIENTE" ▶| (círculo integrado a la derecha de la cápsula)
+   Para que el usuario distinga las dos acciones de un vistazo:
+   - Pulsar las ONDAS o el TÍTULO  -> reproducir / pausar.
+   - Pulsar ESTE CÍRCULO de ▶|    -> saltar a la siguiente canción.
+   Es un círculo compacto con anillo dorado que no se encoge jamás
+   (flex-shrink: 0). */
+.boton-siguiente {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;           /* nunca se aprieta aunque el título sea largo */
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(176, 138, 74, .72); /* anillo dorado tenue */
+  border-radius: 50%;
+  background: rgba(17, 17, 17, .6); /* fondo oscuro para que resalte el círculo */
+  color: var(--cream);
+  cursor: pointer;
+  font: 500 9px/1 var(--sans); /* ▶| con variación de texto (no emoji) */
+  letter-spacing: 1px;
+  opacity: .9;
+  transition: border-color .25s ease, color .25s ease, opacity .25s ease, box-shadow .25s ease;
+}
+.boton-siguiente:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(176, 138, 74, .25); /* halo pequeño en hover */
+}
+
+/* Estado al pasar el ratón O mientras la música se reproduce. */
+.boton-musica:hover,
+.boton-musica.reproduciendo {
+  border-color: var(--gold);       /* borde dorado más intenso */
+  background: linear-gradient(110deg, rgba(176, 138, 74, .3), #111111 64%);
+  box-shadow: 0 0 24px rgba(176, 138, 74, .18); /* halo dorado */
+}
+
+/* ANILLOS QUE SE EXPANDEN al reproducir (ondas de sonido visuales).
+   ::before y ::after son dos circunferencias alrededor del botón;
+   con la clase .reproduciendo se activan con la animación 'onda-musical'
+   (la segunda con un retraso de 0.75s para escalonar el efecto). */
+.boton-musica::before,
+.boton-musica::after { position: absolute; top: 50%; left: 27px; width: 36px; height: 36px; border: 1px solid rgba(176, 138, 74, .22); border-radius: 50%; content: ""; opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.6); }
+.boton-musica.reproduciendo::before { animation: onda-musical 2.2s ease-out infinite; }
+.boton-musica.reproduciendo::after { animation: onda-musical 2.2s .75s ease-out infinite; }
+
+/* ONDAS MUSICALES: las 4 barras pequeñas del lado izquierdo.
+   z-index:1 para quedar sobre los anillos; display:flex en fila. */
+.ondas-musicales { position: relative; z-index: 1; display: flex; align-items: center; gap: 3px; width: 34px; height: 23px; }
+/* Cada barra es un <i>. Todas parten de la misma base y cambian de alto. */
+.ondas-musicales i { display: block; width: 3px; height: 8px; border-radius: 3px; background: linear-gradient(var(--cream), var(--gold)); opacity: .86; }
+.ondas-musicales i:nth-child(2) { height: 13px; }
+.ondas-musicales i:nth-child(3) { height: 18px; }
+.ondas-musicales i:nth-child(4) { height: 10px; }
+/* Al reproducir, cada barra "late" (animación ecualizador).
+   Se añade un pequeño retraso distinto por barra para el efecto cascada. */
+.boton-musica.reproduciendo .ondas-musicales i { animation: ecualizador .8s ease-in-out infinite alternate; }
+.boton-musica.reproduciendo .ondas-musicales i:nth-child(2) { animation-delay: .15s; }
+.boton-musica.reproduciendo .ondas-musicales i:nth-child(3) { animation-delay: .3s; }
+.boton-musica.reproduciendo .ondas-musicales i:nth-child(4) { animation-delay: .45s; }
+
+/* NOMBRE DE LA CANCIÓN (el título dentro del botón).
+   overflow:hidden recorta el texto largo; white-space:nowrap evita que
+   se parta en dos líneas. Como el botón es ancho fijo, el título largo
+   se corta y por eso lo movemos con la marquesina (clase .desplazar). */
+.nombre-cancion { position: relative; z-index: 1; min-width: 0; overflow: hidden; color: var(--cream); font: 600 10px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.texto-cancion { display: inline-block; white-space: nowrap; }
+/* Cuando el título no cabe, la clase .desplazar (añadida por musica.js)
+   lanza la animación 'desplazar-cancion' usando las variables CSS que
+   el propio JS calcula: --distancia-desplazamiento y --duracion-desplazamiento. */
+.nombre-cancion.desplazar .texto-cancion { animation: desplazar-cancion var(--duracion-desplazamiento, 6s) ease-in-out infinite alternate; }
+
+/* MOVER EL TÍTULO LARGO (marquesina) de un lado al otro. */
+@keyframes desplazar-cancion {
+  from { transform: translateX(0); }   /* empieza en su sitio */
+  to { transform: translateX(var(--distancia-desplazamiento)); } /* se desliza hasta la distancia que JS calculó */
+}
+
+/* ANILLO QUE CRECE Y SE DESVANECE (onda de sonido) */
+@keyframes onda-musical {
+  0% { opacity: .7; transform: translate(-50%, -50%) scale(.55); }    /* pequeño y visible */
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }   /* crece y desaparece */
+}
+
+/* BARRAS DEL ECUALIZADOR: se encogen y aclaran. */
+@keyframes ecualizador {
+  to { transform: scaleY(.35); opacity: .45; }
+}
+
+/* ------------------------------------------------------------
+   PANTALLAS PEQUEÑAS
+   En móvil la cápsula ya no se centra verticalmente: se apoya en la
+   franja inferior del encabezado (que ahora es más alto en styles.css)
+   para que el logotipo quede arriba sin que se pisen.
+   ------------------------------------------------------------ */
+@media (max-width: 700px) {
+  .boton-musica {
+    top: auto;                 /* anulamos el centrado vertical... */
+    bottom: 8px;               /* ...y lo fijamos cerca del borde inferior */
+    transform: translate(-50%, 0); /* solo centramos en horizontal */
+    width: 180px;
+    min-width: 0;
+    max-width: calc(100vw - 40px);
+    padding: 9px 14px 9px 12px;
+    gap: 9px;
+  }
+  .nombre-cancion { flex: 1; min-width: 0; font-size: 9px; }
+}
+
+/* Móviles muy pequeños: botón aún más compacto para que el título de la
+   canción nunca se corte a la mitad. El círculo ▶| se encoge un poco y
+   mantiene su anillo dorado. */
+@media (max-width: 380px) {
+  .boton-musica { width: 164px; padding: 8px 9px 8px 10px; gap: 7px; max-width: calc(100vw - 36px); }
+  .boton-musica, .nombre-cancion { font-size: 8px; letter-spacing: .1em; }
+  .boton-siguiente { width: 26px; height: 26px; font-size: 8px; }
+}

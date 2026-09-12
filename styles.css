@@ -1,0 +1,245 @@
+/* ============================================================
+   HOMENAJE A JOSÉ JOSÉ — Estilos generales de la página
+   ------------------------------------------------------------
+   Este archivo define TODO el diseño visual: colores, tipografías,
+   encabezado, portada (hero), pie de página y las animaciones del
+   retrato/vinilo. Los estilos del botón de música viven aparte en
+   musica.css.
+
+   Convenciones del proyecto:
+     - Paleta: fondo casi negro, texto crema, dorado como acento.
+     - Variables CSS en :root para reutilizar colores y fuentes.
+     - Se usa clamp() para que los tamaños fluyan con la pantalla.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   VARIABLES GLOBALES DEL TEMA
+   Se definen en :root (la raíz del documento) y se usan después
+   con var(--nombre). Cambiar aquí un color lo cambia en toda la web.
+   ------------------------------------------------------------ */
+:root {
+  --ink: #f0eee8;               /* color principal del texto (crema claro) */
+  --paper: #0c0c0c;             /* fondo principal (casi negro) */
+  --cream: #f0eee8;             /* tono crema, se usa para textos/acentos */
+  --muted: #8d8980;             /* gris atenuado para textos secundarios */
+  --gold: #b08a4a;              /* dorado, color de acento (homenaje/Vinilo) */
+  --line: rgba(17, 17, 17, .17);/* color de los separadores/bordes sutiles */
+  --serif: "Cormorant Garamond", Georgia, serif; /* tipografía de títulos */
+  --sans: "DM Sans", Arial, sans-serif;          /* tipografía de texto */
+}
+
+/* ------------------------------------------------------------
+   CONFIGURACIÓN BASE / RESET
+   ------------------------------------------------------------ */
+/* `box-sizing: border-box` hace que paddings y bordes cuenten dentro
+   del ancho/alto del elemento, lo que facilita diseñar. */
+* { box-sizing: border-box; }
+/* Scroll suave al navegar con anclas (href="#inicio"). */
+html { scroll-behavior: smooth; }
+/* El body es una columna de flex que ocupa todo el alto (100vh) y usa
+   el fondo oscuro + fuente sans. main con flex:1 empuja el footer abajo. */
+body { display: flex; flex-direction: column; min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); font-family: var(--sans); }
+main { flex: 1; }
+/* Los enlaces heredan el color del texto y no subrayado. */
+a { color: inherit; text-decoration: none; }
+
+/* ------------------------------------------------------------
+   ENCABEZADO
+   ------------------------------------------------------------ */
+/* Barra fija del logo con borde inferior y fondo oscuro. */
+.site-header { display: flex; align-items: center; justify-content: flex-start; height: 92px; padding: 0 5.5vw; border-bottom: 1px solid var(--line); background: var(--paper); }
+/* Contenedor del logo, centrado verticalmente con su nombre. */
+.brand { display: flex; align-items: center; gap: 13px; }
+/* El logo se escala para caber sin deformarse. */
+.brand-logo { display: block; width: 86px; height: 52px; object-fit: contain; }
+/* Menú principal (por defecto no se usa en el HTML actual). */
+.main-nav { display: flex; gap: 38px; margin-left: 8vw; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.main-nav a { position: relative; color: #77746d; transition: color .2s; }
+.main-nav a:hover, .main-nav a.active { color: var(--ink); }
+/* Línea dorada bajo la opción activa del menú. */
+.main-nav a.active::after { position: absolute; right: 0; bottom: -14px; left: 0; height: 1px; background: var(--gold); content: ""; }
+/* Nota pequeñita del encabezado con punto dorado. */
+.header-note { display: flex; align-items: center; gap: 10px; color: #77746d; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.header-note span, .eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+/* ------------------------------------------------------------
+   PORTADA / HERO
+   ------------------------------------------------------------ */
+/* Grid de dos columnas (texto | retrato) que ocupa gran parte de la
+   pantalla. overflow:hidden recorta las órbitas que sobresalen. */
+.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 590px; padding: 7vw 11vw 6vw; overflow: hidden; background: var(--paper); }
+.hero-copy { z-index: 1; align-self: center; padding-bottom: 35px; }
+/* Etiqueta superior con el punto dorado. */
+.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 27px; color: var(--muted); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; }
+/* Título principal: fuente serif, tamaño fluido con clamp() y mayúsculas. */
+.hero h1 { margin: 0 0 23px; font: 500 clamp(62px, 7.8vw, 124px)/.77 var(--serif); letter-spacing: -.055em; text-transform: uppercase; }
+/* La palabra en <em> ("Príncipe") se tiñe de dorado y cursiva. */
+.hero h1 em, blockquote em, h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
+/* Párrafo de presentación, con ancho limitado para mejor lectura. */
+.hero-intro { max-width: 330px; margin: 0 0 30px; color: #aaa69d; font-size: 14px; line-height: 1.7; }
+/* Enlace con subrayado dorado (no se usa en el HTML actual). */
+.text-link { display: inline-flex; align-items: center; gap: 15px; padding-bottom: 9px; border-bottom: 1px solid var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.text-link span { color: var(--gold); font-size: 17px; }
+
+/* ------------------------------------------------------------
+   RETRATO / VINILO GIRATORIO
+   ------------------------------------------------------------ */
+.hero-portrait { position: relative; display: grid; place-items: center; min-height: 470px; }
+/* Marco circular dorado que contiene el disco. */
+.portrait-frame { position: relative; z-index: 1; width: min(34vw, 400px); height: min(34vw, 400px); padding: 15px; border: 1px solid var(--gold); border-radius: 50%; }
+/* Segundo anillo exterior (circunferencia decorativa fina). */
+.portrait-frame::before { position: absolute; inset: -8px; border: 1px solid rgba(176, 138, 74, .27); border-radius: 50%; content: ""; }
+/* El disco en sí: círculo oscuro que gira de forma continua (animación
+   'girar-vinilo'). Dentro va la foto del carrusel. */
+.record-carousel { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 50%; background: #080808; animation: girar-vinilo 24s linear infinite; }
+/* ::before dibuja los "surcos" concéntricos como anillos finos. */
+.record-carousel::before { position: absolute; inset: 2.5%; z-index: 2; border: 1px solid rgba(240, 238, 232, .2); border-radius: 50%; box-shadow: 0 0 0 12px rgba(0, 0, 0, .16), 0 0 0 13px rgba(240, 238, 232, .1), 0 0 0 25px rgba(0, 0, 0, .13), 0 0 0 26px rgba(240, 238, 232, .08); content: ""; pointer-events: none; }
+/* ::after crea el brillo/destello del plástico sobre el disco. */
+.record-carousel::after { position: absolute; inset: 0; z-index: 5; border-radius: 50%; background: linear-gradient(120deg, transparent 27%, rgba(255, 255, 255, .16) 43%, rgba(255, 255, 255, .035) 48%, transparent 62%); content: ""; mix-blend-mode: screen; opacity: .65; pointer-events: none; }
+/* Capa de surcos repetidos radialmente (más detalle de vinilo). */
+.surcos-vinilo { position: absolute; inset: 0; z-index: 2; border-radius: 50%; background: repeating-radial-gradient(circle at center, transparent 0 5px, rgba(8, 8, 8, .32) 5.5px 6.5px, rgba(240, 238, 232, .1) 7px 7.5px); mix-blend-mode: overlay; opacity: .72; pointer-events: none; }
+/* Reflejo diagonal grande sobre el vinilo. */
+.reflejo-vinilo { position: absolute; inset: -20%; z-index: 4; border-radius: 50%; background: linear-gradient(118deg, transparent 38%, rgba(255, 255, 255, .2) 47%, rgba(255, 255, 255, .04) 51%, transparent 59%); opacity: .32; pointer-events: none; }
+/* Fotografía dentro del disco: cubre todo, en blanco y negro.
+   transition hace que el cambio de foto del carrusel sea suave. */
+.foto-carrusel { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: grayscale(1) contrast(1.12); transform: rotate(0deg) scale(1); transition: opacity .45s ease, transform .65s cubic-bezier(.22, .8, .24, 1); }
+/* Mientras sale, la foto se funde girando levemente (clase que añade JS). */
+.foto-carrusel.saliendo { opacity: 0; transform: rotate(18deg) scale(.88); }
+/* Halo dorado difuso detrás del disco. */
+.portrait-glow { position: absolute; inset: 10%; z-index: -1; border-radius: 50%; box-shadow: 0 0 85px 10px rgba(176, 138, 74, .13); }
+/* Cartel con "1948 — 2019 / El Príncipe" sobre el disco. */
+.portrait-caption { position: absolute; right: 3%; bottom: 7%; z-index: 2; display: flex; flex-direction: column; gap: 5px; padding: 13px 17px; border: 1px solid rgba(176, 138, 74, .65); background: #111111; color: var(--cream); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
+.portrait-caption strong { color: var(--gold); font: 500 17px var(--serif); letter-spacing: .03em; text-transform: none; }
+/* Órbitas elípticas decorativas alrededor del retrato. */
+.orbit { position: absolute; border: 1px solid rgba(17, 17, 17, .15); border-radius: 50%; transform: rotate(-32deg); }
+.orbit-one { width: min(45vw, 540px); height: min(16vw, 190px); }
+.orbit-two { width: min(41vw, 500px); height: min(12vw, 145px); transform: rotate(42deg); }
+
+/* ------------------------------------------------------------
+   SECCIONES DE CITA Y LEGADO (parte de la página en desarrollo;
+   el HTML actual solo usa la portada, pero el CSS ya está listo)
+   ------------------------------------------------------------ */
+.quote-section, .legacy-section { padding: 82px 11vw; border-top: 1px solid var(--line); background: var(--paper); }
+.section-label { display: flex; gap: 17px; color: var(--muted); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.section-label span { color: var(--gold); }
+.quote-content { max-width: 780px; margin: 56px auto 35px; text-align: center; }
+.quote-mark { height: 35px; margin: 0; color: var(--gold); font: 100px/.4 var(--serif); }
+blockquote { margin: 0; font: 500 clamp(42px, 6vw, 82px)/.85 var(--serif); letter-spacing: -.045em; text-transform: uppercase; }
+.quote-attribution { margin-top: 27px; color: var(--muted); font: italic 16px var(--serif); }
+.story-card { display: grid; grid-template-columns: 92px 1fr; gap: 20px; max-width: 440px; margin: 52px auto 0; padding: 14px; border: 1px solid var(--line); background: #121212; }
+.story-card img { width: 92px; height: 92px; object-fit: cover; filter: grayscale(1); }
+.story-card p { margin: 0 0 8px; color: #aaa69d; font: 15px/1.55 var(--serif); }
+.story-card .card-kicker { color: var(--cream); font: 600 10px var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.round-arrow { display: grid; place-items: center; width: 28px; height: 28px; margin-top: 13px; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); }
+/* Sección "Legado": invierte colores (fondo claro, texto oscuro). */
+.legacy-section { padding-bottom: 115px; background: var(--ink); color: var(--cream); }
+.legacy-section .section-label { color: #8d8a83; }
+.legacy-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin: 52px 0 65px; }
+h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spacing: -.05em; text-transform: uppercase; }
+.legacy-heading p { max-width: 230px; margin: 0 4% 4px 0; color: #9b9891; font-size: 13px; line-height: 1.65; }
+/* Rejilla de 3 columnas con estadísticas del legado. */
+.legacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(250, 249, 245, .23); }
+.legacy-grid article { display: flex; flex-direction: column; gap: 10px; padding: 25px 20px 0 0; border-right: 1px solid rgba(250, 249, 245, .23); }
+.legacy-grid article + article { padding-left: 25px; }
+.legacy-grid article:last-child { border: 0; }
+.legacy-grid strong { color: var(--gold); font: 500 62px var(--serif); }
+.legacy-grid span { color: #9b9891; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* ------------------------------------------------------------
+   PIE DE PÁGINA (enlaces a plataformas de streaming)
+   ------------------------------------------------------------ */
+/* el pie queda anclado al fondo gracias a main { flex: 1 }. */
+.site-footer { position: relative; margin-top: auto; padding: 34px 5.5vw 30px; background: var(--paper); color: #77746d; }
+/* Los enlaces se centran y se envuelven si no caben. */
+.platform-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 28px; max-width: 980px; margin: 0 auto; }
+.platform-links a { display: inline-flex; align-items: center; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; transition: color .2s; }
+.platform-links a:hover { color: var(--gold); }
+/* Iconos pequeños de las plataformas. */
+.platform-icon-link { width: 31px; height: 31px; justify-content: center; }
+.platform-icon-link img { display: block; width: 27px; height: 27px; object-fit: contain; transition: transform .2s ease; }
+.platform-icon-link:hover img { transform: translateY(-2px); }
+/* Icono de Deezer alternativo (dibujado con CSS si no hay imagen). */
+.deezer-icon { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 7px; background: linear-gradient(135deg, #a238ff, #ff5c95); color: #fff; font: 700 17px/1 var(--sans); }
+/* Logo grande de la página oficial. */
+.official-logo-link { display: inline-flex; align-items: center; }
+.official-logo-link img { display: block; width: 38px; height: 38px; object-fit: contain; transition: transform .2s ease; }
+.official-logo-link:hover img { transform: translateY(-2px); }
+
+/* ------------------------------------------------------------
+   VERSIÓN PARA PANTALLAS PEQUEÑAS
+   Ajustes cuando el ancho de la ventana es de 700px o menos.
+   ------------------------------------------------------------ */
+@media (max-width: 700px) {
+  /* En móvil los elementos que sobresalen (órbitas, botón largo...) podrían
+     generar scroll horizontal espurio; lo cortamos en la raíz. */
+  body { overflow-x: hidden; }
+  /* El encabezado crece y el logotipo se apoya arriba: así el botón de
+     música puede vivir en la franja inferior central (ver musica.css)
+     sin pisar el logo en pantallas estrechas. */
+  .site-header { height: 94px; align-items: flex-start; padding: 10px 6vw 0; }
+  /* Logo un poco más compacto en móvil. */
+  .brand-logo { width: 64px; height: 40px; }
+  .main-nav { display: none; }            /* el menú se oculta en móvil */
+  .header-note { font-size: 8px; }
+  /* El hero pasa de rejilla a una sola columna apilada. */
+  .hero { display: flex; flex-direction: column; min-height: auto; padding: 48px 8vw 64px; }
+  .hero-copy { padding-bottom: 0; }
+  /* Título fluido pero contenible: 16vw en móvil evita que "DE LA CANCIÓN"
+     desborde hacia la derecha en pantallas de 320-360px. */
+  .hero h1 { font-size: clamp(52px, 16vw, 96px); }
+  .hero-intro { max-width: 280px; }
+  .hero-portrait { min-height: clamp(300px, 82vw, 370px); margin-top: 28px; }
+  .portrait-frame { width: min(72vw, 340px); height: min(72vw, 340px); }
+  .portrait-caption { right: 0; bottom: 4%; padding: 10px 12px; font-size: 8px; }
+  .portrait-caption strong { font-size: 15px; }
+  .orbit-one { width: 94vw; height: 31vw; }
+  .orbit-two { width: 84vw; height: 24vw; }
+  .quote-section, .legacy-section { padding: 75px 8vw; }
+  .quote-content { margin-top: 48px; }
+  blockquote { font-size: 53px; }
+  .quote-attribution { font-size: 14px; }
+  .story-card { grid-template-columns: 90px 1fr; gap: 16px; margin-top: 55px; padding: 13px; }
+  .story-card img { width: 90px; height: 90px; }
+  .story-card p { font-size: 14px; }
+  .legacy-heading { display: block; margin: 48px 0; }
+  .legacy-heading p { margin-top: 30px; }
+  .legacy-grid strong { font-size: 48px; }
+  .legacy-grid article + article { padding-left: 12px; }
+  .legacy-grid span { font-size: 8px; letter-spacing: .08em; }
+  .site-footer { padding: 28px 6vw 24px; }
+  .platform-links { gap: 13px 18px; }
+  .platform-links a { font-size: 8px; }
+  .official-logo-link img { width: 38px; height: 38px; }
+}
+
+/* Móviles muy pequeños (≤ 380px, p. ej. iPhone SE / Android antiguos):
+   se compacta el titular, el vinilo y las órbitas para que todo quepa. */
+@media (max-width: 380px) {
+  .site-header { height: 92px; padding-top: 10px; }
+  .hero { padding: 46px 7vw 60px; }
+  .hero h1 { font-size: clamp(44px, 14.5vw, 62px); }
+  .hero-intro { font-size: 13px; }
+  .hero-portrait { min-height: 300px; margin-top: 24px; }
+  .portrait-frame { width: min(78vw, 300px); height: min(78vw, 300px); }
+  .orbit-one { width: 96vw; height: 30vw; }
+  .orbit-two { width: 86vw; height: 23vw; }
+  .platform-links { gap: 12px 14px; }
+}
+
+/* ------------------------------------------------------------
+   ACCESIBILIDAD: usuarios que prefieren menos movimiento
+   Desactivamos las animaciones y el scroll suave.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .foto-carrusel { transition: opacity .2s ease; transform: none; }
+  .record-carousel { animation: none; } /* el vinilo deja de girar */
+}
+
+/* ------------------------------------------------------------
+   ANIMACIÓN: giro continuo del vinilo
+   ------------------------------------------------------------ */
+@keyframes girar-vinilo {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
