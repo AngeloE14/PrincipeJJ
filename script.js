@@ -11,7 +11,9 @@ const fotos = [
   'assets/jose-jose-blanco-negro.webp',
   'assets/jose-jose-buscando-sonrisa.webp',
   'assets/jose-jose-en-concierto.webp',
-  'assets/jose-jose-retrato-perfil.webp'
+  'assets/jose-jose-retrato-perfil.webp',
+  'assets/jose-jose-retrato.webp',
+  'assets/jose-jose-wallpaper.webp'
 ];
 
 // Posición dentro de cada imagen que se mostrará (object-position).
@@ -22,7 +24,9 @@ const encuadres = [
   'center 28%',    // foto 2: elige un punto más abajo
   'center 14%',
   'center 25%',
-  'center 40%'
+  'center 40%',
+  'center 35%',    // foto 6: retrato (orientación vertical)
+  'center 20%'     // foto 7: wallpaper (muy vertical, rostro arriba)
 ];
 
 // Seleccionamos el elemento <img> que mostrará las fotos.

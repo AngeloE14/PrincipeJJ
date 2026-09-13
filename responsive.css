@@ -86,7 +86,7 @@
   .platform-links {
     flex-wrap: nowrap;
     width: 100%;
-    gap: 13px clamp(7px, 3.8vw, 14px);
+    gap: 13px clamp(10px, 5vw, 19px);
   }
 
   .platform-icon-link {
@@ -179,7 +179,7 @@
 
   .platform-links {
     max-width: 100%;
-    gap: 12px clamp(7px, 3.8vw, 14px);
+    gap: 12px clamp(10px, 5vw, 19px);
   }
 
   .footer-disclaimer {
@@ -238,7 +238,7 @@
   }
 
   .platform-links {
-    gap: 12px clamp(7px, 3.2vw, 11px);
+    gap: 12px clamp(10px, 4.4vw, 15px);
   }
 
   .platform-icon-link {
@@ -268,7 +268,7 @@
   }
 
   .platform-links {
-    gap: 12px 8px;
+    gap: 12px 12px;
   }
 
   .visual-musica {

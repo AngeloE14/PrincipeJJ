@@ -108,9 +108,14 @@ a { color: inherit; text-decoration: none; }
 .foto-carrusel.saliendo { opacity: 0; transform: rotate(18deg) scale(.88); }
 /* Halo dorado difuso detrás del disco. */
 .portrait-glow { position: absolute; inset: 10%; z-index: -1; border-radius: 50%; box-shadow: 0 0 85px 10px rgba(176, 138, 74, .13); }
-/* Cartel con "1948 — 2019 / El Príncipe" sobre el disco. */
-.portrait-caption { position: absolute; right: 3%; bottom: 7%; z-index: 2; display: flex; flex-direction: column; gap: 5px; padding: 13px 17px; border: 1px solid rgba(176, 138, 74, .65); background: #111111; color: var(--cream); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; }
-.portrait-caption strong { color: var(--gold); font: 500 17px var(--serif); letter-spacing: .03em; text-transform: none; }
+/* Placa conmemorativa sobre el disco. */
+.portrait-caption { position: absolute; right: 3%; bottom: 7%; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 3px; width: min(150px, calc(100vw - 20px)); padding: 5px 14px; border: 1px solid rgba(201, 162, 75, .6); border-radius: 6px; background: linear-gradient(180deg, #141414 0%, #0a0a0a 100%); color: var(--gold); box-shadow: 0 10px 22px rgba(0, 0, 0, .5), 0 2px 8px rgba(0, 0, 0, .4); }
+.portrait-caption-name { margin: 0; color: #f2e4c3; font: 500 8px var(--serif); letter-spacing: .1em; text-transform: uppercase; text-align: center; }
+.portrait-caption-divider { width: 24px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 162, 75, .7), transparent); }
+.portrait-caption-years { color: rgba(201, 162, 75, .85); font-size: 7px; letter-spacing: .16em; text-transform: uppercase; }
+.portrait-caption-logo { display: block; width: 18px; height: 18px; object-fit: contain; }
+/* Esquinas doradas tipo "marco de certificado" (4 ángulos en L). */
+.portrait-caption::after { position: absolute; inset: 2px; border-radius: inherit; content: ""; pointer-events: none; background-image: linear-gradient(to right, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to bottom, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to right, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to bottom, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to right, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to bottom, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to right, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)), linear-gradient(to bottom, rgba(201, 162, 75, .9), rgba(201, 162, 75, .9)); background-repeat: no-repeat; background-size: 7px 1px, 1px 7px, 7px 1px, 1px 7px, 7px 1px, 1px 7px, 7px 1px, 1px 7px; background-position: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%; }
 /* Órbitas elípticas decorativas alrededor del retrato. */
 .orbit { position: absolute; border: 1px solid rgba(17, 17, 17, .15); border-radius: 50%; transform: rotate(-32deg); }
 .orbit-one { width: min(45vw, 540px); height: min(16vw, 190px); }
@@ -193,8 +198,8 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
   .hero-intro { max-width: 280px; }
   .hero-portrait { min-height: clamp(300px, 82vw, 370px); margin-top: 28px; }
   .portrait-frame { width: min(72vw, 340px); height: min(72vw, 340px); }
-  .portrait-caption { right: 0; bottom: 4%; padding: 10px 12px; font-size: 8px; }
-  .portrait-caption strong { font-size: 15px; }
+  .portrait-caption { right: 1%; bottom: 5%; width: min(42vw, 150px); padding: 4px 12px; }
+  .portrait-caption-logo { width: 16px; height: 16px; }
   .orbit-one { width: 94vw; height: 31vw; }
   .orbit-two { width: 84vw; height: 24vw; }
   .quote-section, .legacy-section { padding: 75px 8vw; }
@@ -225,8 +230,10 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
   .hero-intro { max-width: 260px; margin-bottom: 0; font-size: 13px; line-height: 1.6; }
   .hero-portrait { min-height: 290px; margin-top: 22px; }
   .portrait-frame { width: min(73vw, 300px); height: min(73vw, 300px); padding: 11px; }
-  .portrait-caption { right: -2px; bottom: 3%; padding: 8px 10px; }
-  .portrait-caption strong { font-size: 14px; }
+  .portrait-caption { right: 0; bottom: 4%; width: min(40vw, 145px); padding: 3px 10px; }
+  .portrait-caption-name { font-size: 7px; letter-spacing: .07em; }
+  .portrait-caption-years { font-size: 7px; letter-spacing: .14em; }
+  .portrait-caption-logo { width: 15px; height: 15px; }
   .site-footer { padding: 24px 5vw 20px; }
   .platform-links { max-width: 290px; gap: 12px 16px; }
 }
@@ -240,6 +247,8 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
   .hero-intro { font-size: 13px; }
   .hero-portrait { min-height: 300px; margin-top: 24px; }
   .portrait-frame { width: min(78vw, 300px); height: min(78vw, 300px); }
+  .portrait-caption { width: min(42vw, 138px); gap: 2px; padding: 3px 8px; }
+  .portrait-caption-logo { width: 14px; height: 14px; }
   .orbit-one { width: 96vw; height: 30vw; }
   .orbit-two { width: 86vw; height: 23vw; }
   .platform-links { gap: 12px 14px; }
@@ -252,7 +261,6 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .foto-carrusel { transition: opacity .2s ease; transform: none; }
-  .record-carousel { animation: none; } /* el vinilo deja de girar */
 }
 
 /* ------------------------------------------------------------
