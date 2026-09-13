@@ -36,10 +36,15 @@ const pistas = [
   { archivo: 'audios/te quiero tal como eres.mp3', nombre: 'Te Quiero Tal Como Eres' },
   { archivo: 'audios/tu me estas volviendo loco.mp3', nombre: 'Tú Me Estás Volviendo Loco' },
   { archivo: 'audios/vamos a darnos tiempo.mp3', nombre: 'Vamos a Darnos Tiempo' },
-  { archivo: 'audios/almohada.mp3', nombre: 'Almohada' },
-  { archivo: 'audios/quemame los ojos.mp3', nombre: 'Quémame los Ojos' },
   { archivo: 'audios/volcan.mp3', nombre: 'Volcán' },
-  { archivo: 'audios/ya lo pasado, pasado.mp3', nombre: 'Ya Lo Pasado, Pasado' }
+  { archivo: 'audios/ya lo pasado, pasado.mp3', nombre: 'Ya Lo Pasado, Pasado' },
+  { archivo: 'audios/cosas imposibles.mp3', nombre: 'Cosas Imposibles' },
+  { archivo: 'audios/he renunciado a ti.mp3', nombre: 'He Renunciado a Ti' },
+  { archivo: 'audios/lo dudo.mp3', nombre: 'Lo Dudo' },
+  { archivo: 'audios/preso.mp3', nombre: 'Preso' },
+  { archivo: 'audios/quemame los ojos.mp3', nombre: 'Quémame Los Ojos' },
+  { archivo: 'audios/quiero perderme contigo.mp3', nombre: 'Quiero Perderme Contigo' },
+  { archivo: 'audios/ya no pienso en ti.mp3', nombre: 'Ya No Pienso en Ti' }
 ];
 
 // Referencias a los elementos del HTML que vamos a manipular.
