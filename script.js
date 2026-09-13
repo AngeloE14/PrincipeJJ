@@ -7,11 +7,11 @@
 
 // Rutas de las imágenes que irán rotando dentro del retrato.
 const fotos = [
-  'assets/jose-jose-retrato-circular.jpeg',
-  'assets/jose-jose-blanco-negro.jpeg',
-  'assets/jose-jose-buscando-sonrisa.jpeg',
-  'assets/jose-jose-en-concierto.jpeg',
-  'assets/jose-jose-retrato-perfil.jpeg'
+  'assets/jose-jose-retrato-circular.webp',
+  'assets/jose-jose-blanco-negro.webp',
+  'assets/jose-jose-buscando-sonrisa.webp',
+  'assets/jose-jose-en-concierto.webp',
+  'assets/jose-jose-retrato-perfil.webp'
 ];
 
 // Posición dentro de cada imagen que se mostrará (object-position).
