@@ -51,7 +51,7 @@ a { color: inherit; text-decoration: none; }
 /* Contenedor del logo, centrado verticalmente con su nombre. */
 .brand { display: flex; align-items: center; gap: 13px; }
 /* El logo se escala para caber sin deformarse. */
-.brand-logo { display: block; width: 86px; height: 52px; object-fit: contain; }
+.brand-logo { display: block; width: 140px; height: 72px; object-fit: contain; }
 /* Menú principal (por defecto no se usa en el HTML actual). */
 .main-nav { display: flex; gap: 38px; margin-left: 8vw; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .main-nav a { position: relative; color: #77746d; transition: color .2s; }
@@ -67,12 +67,13 @@ a { color: inherit; text-decoration: none; }
    ------------------------------------------------------------ */
 /* Grid de dos columnas (texto | retrato) que ocupa gran parte de la
    pantalla. overflow:hidden recorta las órbitas que sobresalen. */
-.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 590px; padding: 7vw 11vw 6vw; overflow: hidden; background: var(--paper); }
+.hero { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; min-height: 590px; padding: 7vw 9vw 6vw; overflow: hidden; background: var(--paper); }
 .hero-copy { z-index: 1; align-self: center; padding-bottom: 35px; }
 /* Etiqueta superior con el punto dorado. */
 .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 27px; color: var(--muted); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; }
 /* Título principal: fuente serif, tamaño fluido con clamp() y mayúsculas. */
 .hero h1 { margin: 0 0 23px; font: 500 clamp(62px, 7.8vw, 124px)/.77 var(--serif); letter-spacing: -.055em; text-transform: uppercase; }
+.hero-title-image { display: block; width: min(100%, 780px); height: auto; margin: 0 0 27px; }
 /* La palabra en <em> ("Príncipe") se tiñe de dorado y cursiva. */
 .hero h1 em, blockquote em, h2 em { color: var(--gold); font-style: italic; font-weight: 400; }
 /* Párrafo de presentación, con ancho limitado para mejor lectura. */
@@ -151,19 +152,20 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
 /* el pie queda anclado al fondo gracias a main { flex: 1 }. */
 .site-footer { position: relative; margin-top: auto; padding: 34px 5.5vw 30px; background: var(--paper); color: #77746d; }
 /* Los enlaces se centran y se envuelven si no caben. */
-.platform-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 28px; max-width: 980px; margin: 0 auto; }
+.platform-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 32px; max-width: 980px; margin: 0 auto; }
 .platform-links a { display: inline-flex; align-items: center; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; transition: color .2s; }
 .platform-links a:hover { color: var(--gold); }
 /* Iconos pequeños de las plataformas. */
-.platform-icon-link { width: 31px; height: 31px; justify-content: center; }
-.platform-icon-link img { display: block; width: 27px; height: 27px; object-fit: contain; transition: transform .2s ease; }
+.platform-icon-link { width: 37px; height: 37px; justify-content: center; }
+.platform-icon-link img { display: block; width: 33px; height: 33px; object-fit: contain; transition: transform .2s ease; }
 .platform-icon-link:hover img { transform: translateY(-2px); }
 /* Icono de Deezer alternativo (dibujado con CSS si no hay imagen). */
 .deezer-icon { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 7px; background: linear-gradient(135deg, #a238ff, #ff5c95); color: #fff; font: 700 17px/1 var(--sans); }
 /* Logo grande de la página oficial. */
 .official-logo-link { display: inline-flex; align-items: center; }
-.official-logo-link img { display: block; width: 38px; height: 38px; object-fit: contain; transition: transform .2s ease; }
+.official-logo-link img { display: block; width: 45px; height: 45px; object-fit: contain; transition: transform .2s ease; }
 .official-logo-link:hover img { transform: translateY(-2px); }
+.footer-disclaimer { width: max-content; max-width: 100%; margin: 18px auto 0; color: #65625c; font-size: 10px; line-height: 1.5; letter-spacing: .08em; text-align: center; text-transform: uppercase; white-space: nowrap; }
 
 /* ------------------------------------------------------------
    VERSIÓN PARA PANTALLAS PEQUEÑAS
@@ -187,6 +189,7 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
   /* Título fluido pero contenible: 16vw en móvil evita que "DE LA CANCIÓN"
      desborde hacia la derecha en pantallas de 320-360px. */
   .hero h1 { font-size: clamp(52px, 16vw, 96px); }
+  .hero-title-image { width: min(100%, 350px); margin-bottom: 24px; }
   .hero-intro { max-width: 280px; }
   .hero-portrait { min-height: clamp(300px, 82vw, 370px); margin-top: 28px; }
   .portrait-frame { width: min(72vw, 340px); height: min(72vw, 340px); }
@@ -210,6 +213,22 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
   .platform-links { gap: 13px 18px; }
   .platform-links a { font-size: 8px; }
   .official-logo-link img { width: 38px; height: 38px; }
+}
+
+@media (max-width: 480px) {
+  .site-header { height: 92px; padding-right: 5vw; padding-left: 5vw; }
+  .brand-logo { width: 58px; height: 36px; }
+  .hero { padding: 42px 7vw 56px; }
+  .eyebrow { margin-bottom: 22px; font-size: 8px; letter-spacing: .13em; }
+  .hero h1 { font-size: clamp(48px, 15.5vw, 74px); line-height: .8; }
+  .hero-title-image { width: min(100%, 310px); margin-bottom: 21px; }
+  .hero-intro { max-width: 260px; margin-bottom: 0; font-size: 13px; line-height: 1.6; }
+  .hero-portrait { min-height: 290px; margin-top: 22px; }
+  .portrait-frame { width: min(73vw, 300px); height: min(73vw, 300px); padding: 11px; }
+  .portrait-caption { right: -2px; bottom: 3%; padding: 8px 10px; }
+  .portrait-caption strong { font-size: 14px; }
+  .site-footer { padding: 24px 5vw 20px; }
+  .platform-links { max-width: 290px; gap: 12px 16px; }
 }
 
 /* Móviles muy pequeños (≤ 380px, p. ej. iPhone SE / Android antiguos):

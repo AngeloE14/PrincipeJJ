@@ -22,21 +22,21 @@
   display: inline-flex;      /* contenido (ondas + título) en fila */
   align-items: center;
   gap: 11px;
-  width: max-content;        /* la cápsula se ajusta a su contenido */
-  min-width: 210px;
-  max-width: min(300px, calc(100vw - 150px));
+  width: min(200px, calc(100vw - 150px));
+  min-width: 0;
+  max-width: 200px;
   padding: 10px 16px 10px 14px;
-  border: 1px solid rgba(176, 138, 74, .72);  /* borde dorado tenue */
+  border: 1px solid rgba(240, 238, 232, .09);  /* contorno neutro muy sutil */
   border-radius: 999px;      /* radio grande = forma de píldora */
-  background: linear-gradient(110deg, rgba(176, 138, 74, .2), rgba(17, 17, 17, .96) 63%);
+  background: #0b0b0b;
   color: var(--cream);       /* texto crema (variable definida en styles.css) */
   cursor: pointer;
   font: 500 10px var(--sans);
   letter-spacing: .14em;
   text-transform: uppercase;
   transform: translate(-50%, -50%);
-  /* Doble sombra: una interior dorada sutil + una exterior para elevarlo. */
-  box-shadow: inset 0 0 22px rgba(176, 138, 74, .08), 0 8px 28px rgba(0, 0, 0, .3);
+  /* Sombra oscura y discreta para integrarlo con el encabezado. */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .24);
   /* Transiciones suaves al pasar el ratón o activarse. */
   transition: border-color .25s ease, background .25s ease, box-shadow .25s ease, color .25s ease;
   /* Optimizaciones táctiles: el toque responde al instante (sin la demora
@@ -78,23 +78,26 @@
 /* Estado al pasar el ratón O mientras la música se reproduce. */
 .boton-musica:hover,
 .boton-musica.reproduciendo {
-  border-color: var(--gold);       /* borde dorado más intenso */
-  background: linear-gradient(110deg, rgba(176, 138, 74, .3), #111111 64%);
-  box-shadow: 0 0 24px rgba(176, 138, 74, .18); /* halo dorado */
+  border-color: rgba(240, 238, 232, .14);
+  background: #0e0e0e;
+  box-shadow: 0 0 18px rgba(0, 0, 0, .24);
 }
 
 /* ANILLOS QUE SE EXPANDEN al reproducir (ondas de sonido visuales).
    ::before y ::after son dos circunferencias alrededor del botón;
    con la clase .reproduciendo se activan con la animación 'onda-musical'
    (la segunda con un retraso de 0.75s para escalonar el efecto). */
-.boton-musica::before,
-.boton-musica::after { position: absolute; top: 50%; left: 27px; width: 36px; height: 36px; border: 1px solid rgba(176, 138, 74, .22); border-radius: 50%; content: ""; opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.6); }
-.boton-musica.reproduciendo::before { animation: onda-musical 2.2s ease-out infinite; }
-.boton-musica.reproduciendo::after { animation: onda-musical 2.2s .75s ease-out infinite; }
-
 /* ONDAS MUSICALES: las 4 barras pequeñas del lado izquierdo.
    z-index:1 para quedar sobre los anillos; display:flex en fila. */
-.ondas-musicales { position: relative; z-index: 1; display: flex; align-items: center; gap: 3px; width: 34px; height: 23px; }
+.visual-musica { position: relative; z-index: 1; display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 38px; height: 38px; transform: translateY(-5px); }
+/* Las ondas radiales salen por debajo de la carita, sin ocupar espacio
+   horizontal adicional dentro de la cápsula. */
+.visual-musica::before,
+.visual-musica::after { position: absolute; top: calc(100% - 7px); left: 50%; width: 42px; height: 42px; border: 1px solid rgba(176, 138, 74, .22); border-radius: 50%; content: ""; opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(.6); }
+.boton-musica.reproduciendo .visual-musica::before { animation: onda-musical 2.2s ease-out infinite; }
+.boton-musica.reproduciendo .visual-musica::after { animation: onda-musical 2.2s .75s ease-out infinite; }
+.icono-app-musica { display: block; width: 38px; height: 38px; object-fit: contain; }
+.ondas-musicales { position: absolute; top: calc(100% - 5px); left: 50%; display: flex; align-items: center; justify-content: center; gap: 3px; width: 33px; height: 20px; transform: translateX(-50%); }
 /* Cada barra es un <i>. Todas parten de la misma base y cambian de alto. */
 .ondas-musicales i { display: block; width: 3px; height: 8px; border-radius: 3px; background: linear-gradient(var(--cream), var(--gold)); opacity: .86; }
 .ondas-musicales i:nth-child(2) { height: 13px; }
@@ -111,12 +114,12 @@
    overflow:hidden recorta el texto largo; white-space:nowrap evita que
    se parta en dos líneas. Como el botón es ancho fijo, el título largo
    se corta y por eso lo movemos con la marquesina (clase .desplazar). */
-.nombre-cancion { position: relative; z-index: 1; min-width: 0; overflow: hidden; color: var(--cream); font: 600 10px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-.texto-cancion { display: inline-block; white-space: nowrap; }
+.nombre-cancion { position: relative; z-index: 1; flex: 1; min-width: 0; overflow: hidden; color: var(--cream); font: 600 10px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.texto-cancion { display: block; width: max-content; white-space: nowrap; }
 /* Cuando el título no cabe, la clase .desplazar (añadida por musica.js)
    lanza la animación 'desplazar-cancion' usando las variables CSS que
    el propio JS calcula: --distancia-desplazamiento y --duracion-desplazamiento. */
-.nombre-cancion.desplazar .texto-cancion { animation: desplazar-cancion var(--duracion-desplazamiento, 6s) ease-in-out infinite alternate; }
+.nombre-cancion.desplazar .texto-cancion { animation: desplazar-cancion var(--duracion-desplazamiento, 6s) linear infinite alternate; }
 
 /* MOVER EL TÍTULO LARGO (marquesina) de un lado al otro. */
 @keyframes desplazar-cancion {
@@ -143,8 +146,12 @@
    ------------------------------------------------------------ */
 @media (max-width: 700px) {
   .boton-musica {
-    top: auto;                 /* anulamos el centrado vertical... */
-    bottom: 8px;               /* ...y lo fijamos cerca del borde inferior */
+    position: fixed;
+    top: auto;
+    top: max(14px, env(safe-area-inset-top));
+    bottom: auto;
+    left: 50%;
+    z-index: 1000;
     transform: translate(-50%, 0); /* solo centramos en horizontal */
     width: 180px;
     min-width: 0;
@@ -159,7 +166,16 @@
    canción nunca se corte a la mitad. El círculo ▶| se encoge un poco y
    mantiene su anillo dorado. */
 @media (max-width: 380px) {
-  .boton-musica { width: 164px; padding: 8px 9px 8px 10px; gap: 7px; max-width: calc(100vw - 36px); }
+  .boton-musica { width: 170px; padding: 8px 8px 8px 9px; gap: 6px; max-width: calc(100vw - 36px); }
   .boton-musica, .nombre-cancion { font-size: 8px; letter-spacing: .1em; }
   .boton-siguiente { width: 26px; height: 26px; font-size: 8px; }
+}
+
+@media (max-width: 340px) {
+  .boton-musica { width: 160px; padding-right: 7px; padding-left: 8px; gap: 6px; }
+  .visual-musica { width: 50px; gap: 3px; }
+  .ondas-musicales { width: 26px; }
+  .icono-app-musica { width: 31px; height: 31px; }
+  .ondas-musicales { gap: 2px; }
+  .boton-siguiente { width: 24px; height: 24px; font-size: 7px; }
 }

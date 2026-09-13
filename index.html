@@ -39,6 +39,7 @@
     <!-- Hojas de estilo: primero lo general y después lo específico de música. -->
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="musica.css" />
+    <link rel="stylesheet" href="responsive.css" />
   </head>
   <body>
     <!-- ======================================================
@@ -57,7 +58,10 @@
            integrado (sin caja propia) para saltar a la siguiente pista.
            aria-pressed indica a los lectores de pantalla si está activado. -->
       <button class="boton-musica" type="button" aria-label="Activar música de fondo" aria-pressed="false">
-        <span class="ondas-musicales" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="visual-musica" aria-hidden="true">
+          <img class="icono-app-musica" src="assets/icono-reproductor-jose.webp" alt="" />
+          <span class="ondas-musicales"><i></i><i></i><i></i><i></i></span>
+        </span>
         <span class="nombre-cancion"><span class="texto-cancion">O Tú o Yo</span></span>
         <span class="boton-siguiente" aria-hidden="true">▶︎|</span>
       </button>
@@ -74,8 +78,8 @@
         <div class="hero-copy">
           <!-- Pequeña etiqueta superior con un punto dorado (span vacío). -->
           <p class="eyebrow"><span></span> Homenaje a José José</p>
-          <!-- Título principal. <em> resalta "Príncipe" en dorado. -->
-          <h1>El <em>Príncipe</em><br />de la canción</h1>
+          <!-- Título principal en formato de imagen para conservar su diseño original. -->
+          <img class="hero-title-image" src="assets/texto-el-principe.webp" alt="El Príncipe de la Canción" />
           <p class="hero-intro">Una voz que convirtió el desamor en poesía y dejó una huella imborrable en la música de México y el mundo.</p>
         </div>
 
@@ -113,17 +117,15 @@
          ====================================================== -->
     <footer class="site-footer">
       <nav class="platform-links" aria-label="Enlaces oficiales de José José">
+        <!-- El sitio oficial aparece primero como referencia principal. -->
+        <a class="official-logo-link" href="https://josejoseoficial.com.mx/" target="_blank" rel="noopener noreferrer" aria-label="Página oficial de José José">
+          <img src="assets/logo-jose-jose.webp" alt="Página oficial de José José" loading="lazy" decoding="async" />
+        </a>
         <a class="platform-icon-link" href="https://www.youtube.com/channel/UCSPwNgHHyAtHanVaGN2LLWA" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           <img src="assets/youtube.webp" alt="YouTube" loading="lazy" decoding="async" />
         </a>
         <a class="platform-icon-link" href="https://open.spotify.com/artist/4mN0qcMxWX8oToqfDPM5yV" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
           <img src="assets/spotify.webp" alt="Spotify" loading="lazy" decoding="async" />
-        </a>
-        <a class="platform-icon-link deezer-link" href="https://www.deezer.com/search/Jos%C3%A9%20Jos%C3%A9" target="_blank" rel="noopener noreferrer" aria-label="Deezer">
-          <img src="assets/deezer.webp" alt="Deezer" loading="lazy" decoding="async" />
-        </a>
-        <a class="platform-icon-link" href="https://music.amazon.com/artists/B001369092/jos%C3%A9-jos%C3%A9" target="_blank" rel="noopener noreferrer" aria-label="Amazon Music">
-          <img src="assets/amazon.webp" alt="Amazon Music" loading="lazy" decoding="async" />
         </a>
         <a class="platform-icon-link" href="https://music.youtube.com/channel/UCSPwNgHHyAtHanVaGN2LLWA" target="_blank" rel="noopener noreferrer" aria-label="YouTube Music">
           <img src="assets/youtube-music.webp" alt="YouTube Music" loading="lazy" decoding="async" />
@@ -131,11 +133,14 @@
         <a class="platform-icon-link" href="https://music.apple.com/us/artist/jos%C3%A9-jos%C3%A9/333303" target="_blank" rel="noopener noreferrer" aria-label="Apple Music">
           <img src="assets/apple-music.webp" alt="Apple Music" loading="lazy" decoding="async" />
         </a>
-        <!-- Logo de la página oficial, algo más grande para distinguirse. -->
-        <a class="official-logo-link" href="https://josejoseoficial.com.mx/" target="_blank" rel="noopener noreferrer" aria-label="Página oficial de José José">
-          <img src="assets/logo-jose-jose.webp" alt="Página oficial de José José" loading="lazy" decoding="async" />
+        <a class="platform-icon-link" href="https://music.amazon.com/artists/B001369092/jos%C3%A9-jos%C3%A9" target="_blank" rel="noopener noreferrer" aria-label="Amazon Music">
+          <img src="assets/amazon.webp" alt="Amazon Music" loading="lazy" decoding="async" />
+        </a>
+        <a class="platform-icon-link deezer-link" href="https://www.deezer.com/search/Jos%C3%A9%20Jos%C3%A9" target="_blank" rel="noopener noreferrer" aria-label="Deezer">
+          <img src="assets/deezer.webp" alt="Deezer" loading="lazy" decoding="async" />
         </a>
       </nav>
+      <p class="footer-disclaimer">Homenaje a José José · Sin fines de lucro · Sitio no oficial.</p>
     </footer>
     <!-- defer hace que los scripts se ejecuten tras leer el HTML,
          así el DOM ya existe cuando el JS busca sus elementos. -->

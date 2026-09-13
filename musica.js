@@ -261,6 +261,8 @@ anunciarPistaActiva(indiceActual);
 audioFondo = new Audio(pistas[indiceActual].archivo);
 audioFondo.volume = VOLUMEN_BASE;
 audioFondo.preload = 'auto';
+audioFondo.autoplay = true;
+audioFondo.playsInline = true;
 audioFondo.load(); // <-- aquí se descarga la primera canción
 audioFondo.addEventListener('ended', alTerminarCancion);
 audioFondo.addEventListener('timeupdate', detectarFinCancion);
@@ -268,6 +270,7 @@ audioFondo.addEventListener('timeupdate', detectarFinCancion);
 // ---------- EVENTOS GLOBALES ----------
 // Autoplay al terminar de cargar la página (puede que el navegador lo
 // bloquee hasta que haya una interacción).
+intentarReproducir();
 window.addEventListener('load', intentarReproducir);
 window.addEventListener('pointerdown', (evento) => {
   // Ignoramos los clics dentro del botón de música: este control ya tiene

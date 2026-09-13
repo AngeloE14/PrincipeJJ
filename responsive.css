@@ -1,0 +1,298 @@
+/* ============================================================
+   HOMENAJE A JOSÉ JOSÉ — Ajustes responsive
+   ------------------------------------------------------------
+   Este archivo contiene únicamente los refinamientos para pantallas
+   pequeñas. Se carga después de styles.css y musica.css para mantener
+   intacto el diseño de escritorio y centralizar los cambios móviles.
+   ============================================================ */
+
+/* Tablets y teléfonos en orientación vertical. */
+@media (max-width: 700px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    min-height: 94px;
+    height: auto;
+    padding: 10px 6vw 14px;
+  }
+
+  .brand-logo {
+    width: 98px;
+    height: 56px;
+  }
+
+  .boton-musica {
+    top: max(14px, env(safe-area-inset-top));
+    width: min(182px, calc(100vw - 28px));
+    max-width: calc(100vw - 28px);
+    padding: 9px 12px;
+    gap: 8px;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    padding: 48px 8vw 64px;
+  }
+
+  .hero-copy {
+    width: 100%;
+    padding-bottom: 0;
+  }
+
+  .hero-title-image {
+    width: min(100%, 350px);
+  }
+
+  .hero-intro {
+    max-width: 290px;
+  }
+
+  .hero-portrait {
+    width: 100%;
+    min-height: clamp(300px, 82vw, 370px);
+    margin-top: 30px;
+  }
+
+  .portrait-frame {
+    width: min(72vw, 340px);
+    height: min(72vw, 340px);
+  }
+
+  .portrait-caption {
+    right: 0;
+    bottom: 4%;
+  }
+
+  .orbit-one {
+    width: 94vw;
+    height: 31vw;
+  }
+
+  .orbit-two {
+    width: 84vw;
+    height: 24vw;
+  }
+
+  .site-footer {
+    padding: 28px 6vw 24px;
+  }
+
+  .platform-links {
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 13px clamp(7px, 3.8vw, 14px);
+  }
+
+  .platform-icon-link {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .platform-icon-link img {
+    width: 27px;
+    height: 27px;
+  }
+
+  .official-logo-link {
+    flex: 0 0 34px;
+  }
+
+  .official-logo-link img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* Teléfonos compactos: evita que el reproductor tape el logotipo. */
+@media (max-width: 480px) {
+  .site-header {
+    min-height: 92px;
+    padding: 10px 5vw 14px;
+  }
+
+  .brand-logo {
+    width: 88px;
+    height: 52px;
+  }
+
+  .boton-musica {
+    width: min(174px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    padding: 8px 10px;
+    gap: 7px;
+  }
+
+  .nombre-cancion {
+    font-size: 9px;
+    letter-spacing: .09em;
+  }
+
+  .hero {
+    padding: 42px 7vw 56px;
+  }
+
+  .eyebrow {
+    margin-bottom: 22px;
+    font-size: 8px;
+    letter-spacing: .13em;
+  }
+
+  .hero-title-image {
+    width: min(100%, 310px);
+    margin-bottom: 21px;
+  }
+
+  .hero-intro {
+    max-width: 260px;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .hero-portrait {
+    min-height: 290px;
+    margin-top: 24px;
+  }
+
+  .portrait-frame {
+    width: min(73vw, 300px);
+    height: min(73vw, 300px);
+    padding: 11px;
+  }
+
+  .portrait-caption {
+    right: -2px;
+    bottom: 3%;
+    padding: 8px 10px;
+  }
+
+  .site-footer {
+    padding: 24px 5vw 20px;
+  }
+
+  .platform-links {
+    max-width: 100%;
+    gap: 12px clamp(7px, 3.8vw, 14px);
+  }
+
+  .footer-disclaimer {
+    max-width: calc(100vw - 20px);
+    margin-top: 16px;
+    font-size: 8px;
+    letter-spacing: .04em;
+  }
+}
+
+/* Pantallas muy estrechas, como teléfonos de 320–360 px. */
+@media (max-width: 380px) {
+  .site-header {
+    min-height: 92px;
+    padding-top: 10px;
+  }
+
+  .brand-logo {
+    width: 84px;
+    height: 50px;
+  }
+
+  .boton-musica {
+    width: min(166px, calc(100vw - 20px));
+    max-width: calc(100vw - 20px);
+    padding: 8px 8px;
+    gap: 5px;
+  }
+
+  .boton-siguiente {
+    width: 26px;
+    height: 26px;
+    font-size: 8px;
+  }
+
+  .visual-musica {
+    width: 38px;
+  }
+
+  .hero {
+    padding: 46px 7vw 60px;
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 14.5vw, 62px);
+  }
+
+  .hero-portrait {
+    min-height: 300px;
+    margin-top: 24px;
+  }
+
+  .portrait-frame {
+    width: min(78vw, 300px);
+    height: min(78vw, 300px);
+  }
+
+  .platform-links {
+    gap: 12px clamp(7px, 3.2vw, 11px);
+  }
+
+  .platform-icon-link {
+    flex-basis: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .platform-icon-link img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .official-logo-link,
+  .official-logo-link img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Teléfonos extremadamente estrechos. */
+@media (max-width: 340px) {
+  .boton-musica {
+    width: min(156px, calc(100vw - 18px));
+    padding-right: 6px;
+    padding-left: 7px;
+  }
+
+  .platform-links {
+    gap: 12px 8px;
+  }
+
+  .visual-musica {
+    width: 34px;
+  }
+
+  .icono-app-musica {
+    width: 31px;
+    height: 31px;
+  }
+
+  .ondas-musicales {
+    width: 26px;
+    gap: 2px;
+  }
+
+  .boton-siguiente {
+    width: 24px;
+    height: 24px;
+    font-size: 7px;
+  }
+
+  .nombre-cancion {
+    font-size: 8px;
+    letter-spacing: .08em;
+  }
+}
