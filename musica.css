@@ -7,17 +7,19 @@
    El resto del diseño está en styles.css.
    ============================================================ */
 
-/* Necesario para posicionar el botón en el centro del encabezado
-   (el botón usa position:absolute y este contenedor debe ser relativo). */
+/* El botón es position:fixed (siempre visible al hacer scroll), así que
+   el encabezado no necesita contenerlo: el .site-header queda relativo
+   únicamente por si en el futuro se posicionan elementos dentro de él. */
 .site-header { position: relative; }
 
 /* BOTÓN PRINCIPAL
    Es un elemento <button> estilizado como cápsula redondeada.
-   position:absolute + left/top 50% + translate(-50%,-50%) lo centran
-   en medio de la barra del encabezado. */
+   position:fixed + left/top 50% + translate(-50%,-50%) lo centran
+   en la parte superior de la página y lo mantienen SIEMPRE visible
+   al hacer scroll (no depende del .site-header). */
 .boton-musica {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 46px;                /* centro del encabezado (92px de alto) */
   left: 50%;
   display: inline-flex;      /* contenido (ondas + título) en fila */
   align-items: center;
@@ -35,6 +37,8 @@
   letter-spacing: .14em;
   text-transform: uppercase;
   transform: translate(-50%, -50%);
+  /* El reproductor siempre queda por encima del resto de secciones. */
+  z-index: 1000;
   /* Sombra oscura y discreta para integrarlo con el encabezado. */
   box-shadow: 0 6px 20px rgba(0, 0, 0, .24);
   /* Transiciones suaves al pasar el ratón o activarse. */

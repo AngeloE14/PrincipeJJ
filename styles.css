@@ -66,9 +66,11 @@ a { color: inherit; text-decoration: none; }
    PORTADA / HERO
    ------------------------------------------------------------ */
 /* Grid de dos columnas (texto | retrato) que ocupa gran parte de la
-   pantalla. overflow:hidden recorta las órbitas que sobresalen. */
-.hero { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; min-height: 590px; padding: 7vw 9vw 6vw; overflow: hidden; background: var(--paper); }
-.hero-copy { z-index: 1; align-self: center; padding-bottom: 35px; }
+   pantalla. overflow:hidden recorta las órbitas que sobresalen.
+   align-items:center centra ambas columnas verticalmente dentro de la
+   altura total, de modo que el aire inferior queda igual en las dos. */
+.hero { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; min-height: 540px; align-items: center; padding: 6vw 9vw 4.5vw; overflow: hidden; background: var(--paper); }
+.hero-copy { z-index: 1; align-self: center; padding-bottom: 0px; }
 /* Etiqueta superior con el punto dorado. */
 .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 27px; color: var(--muted); font-size: 10px; letter-spacing: .17em; text-transform: uppercase; }
 /* Título principal: fuente serif, tamaño fluido con clamp() y mayúsculas. */
@@ -150,6 +152,25 @@ h2 { margin: 0; font: 500 clamp(56px, 7vw, 105px)/.77 var(--serif); letter-spaci
 .legacy-grid article:last-child { border: 0; }
 .legacy-grid strong { color: var(--gold); font: 500 62px var(--serif); }
 .legacy-grid span { color: #9b9891; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+/* Layout "Calles": portadas rotadas y superpuestas en diagonal + texto a la derecha. */
+/* La sección apoya sobre el padding inferior del hero (6vw): sin padding
+   superior propio; el alto lo determinan las 3 fotos y el texto se centra
+   verticalmente en ese mismo alto (Opción A) para no dejar vacíos. */
+.seccion-calles { padding: 0 7vw 0; }
+.calles-layout { display: grid; grid-template-columns: 1.12fr .88fr; gap: clamp(24px, 3.8vw, 58px); width: 100%; max-width: 1500px; margin: 0 auto; align-items: center; }
+/* Escalera diagonal de póster: cada foto gira ligeramente y se superpone
+   a la anterior, avanzando hacia abajo-derecha (fuera de toda cuadrícula). */
+.calles-images { align-self: stretch; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; width: 100%; padding: 0 0 18px; }
+.calles-images img { display: block; height: auto; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .55)); will-change: transform; }
+.calles-images img:nth-child(1) { position: relative; z-index: 1; width: 88%; margin-left: 0; transform: rotate(-3.5deg); }
+.calles-images img:nth-child(2) { position: relative; z-index: 2; width: 56%; margin: -16% 0 0 20%; transform: rotate(2.5deg); }
+.calles-images img:nth-child(3) { position: relative; z-index: 3; width: 44%; margin: -22% 0 0 40%; transform: rotate(-2deg); }
+/* Columna de texto: un solo bloque fijo, centrado en la altura del stack. */
+.calles-copy { align-self: center; max-width: 440px; }
+.calles-copy .section-label { margin-bottom: 14px; }
+.calles-copy h2 { margin: 0 0 16px; font-size: clamp(32px, 4vw, 54px); line-height: .82; }
+.calles-copy p { margin: 0 0 10px; color: #aaa69d; font: 14px/1.7 var(--sans); }
+.calles-copy p:last-child { margin-bottom: 0; }
 
 /* ------------------------------------------------------------
    PIE DE PÁGINA (enlaces a plataformas de streaming)
