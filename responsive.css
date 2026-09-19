@@ -16,7 +16,8 @@
 
   .calles-images img,
   .calles-images img:nth-child(2),
-  .calles-images img:nth-child(3) {
+  .calles-images img:nth-child(3),
+  .calles-images img:nth-child(4) {
     position: static;
     z-index: auto;
     width: 100%;
@@ -56,7 +57,8 @@
   .calles-images img,
   .calles-images img:nth-child(1),
   .calles-images img:nth-child(2),
-  .calles-images img:nth-child(3) {
+  .calles-images img:nth-child(3),
+  .calles-images img:nth-child(4) {
     position: relative;
     height: auto;
   }
@@ -82,6 +84,14 @@
     margin: -8% 0 0;
     align-self: flex-start;
     transform: rotate(-2deg);
+  }
+
+  .calles-images img:nth-child(4) {
+    display: block;
+    z-index: 4;
+    width: 56%;
+    margin: -6% 0 0 14%;
+    transform: rotate(2deg);
   }
 
   .calles-copy {
@@ -396,5 +406,53 @@
   .nombre-cancion {
     font-size: 8px;
     letter-spacing: .08em;
+  }
+}
+
+/* Sección "El Triste" (OTI): en móvil se apila en una columna, con el
+   texto primero y la imagen después, centrado y con aire suficiente
+   para no sentirse apretado. */
+@media (max-width: 700px) {
+  .seccion-oti {
+    padding: 48px 6vw 54px;
+  }
+
+  .oti-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "copy" "image";
+    gap: 30px;
+  }
+
+  .oti-image {
+    justify-self: center;
+    width: 100%;
+    max-width: min(100%, 520px);
+    margin: 0 auto;
+  }
+
+  .oti-copy {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* El eyebrow es un <p>: le devolvemos su tamaño propio de etiqueta
+     y lo centramos junto al título (el flex no lo centra solo). */
+  .oti-copy .eyebrow {
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .oti-copy h2 {
+    font-size: clamp(30px, 9vw, 46px);
+  }
+
+  /* Solo el párrafo de texto: excluimos el eyebrow para no heredar
+     su tamaño de párrafo. El cuerpo va a la izquierda (no centrado). */
+  .oti-copy p:not(.eyebrow) {
+    max-width: 46ch;
+    margin: 0 auto 10px;
+    font-size: 13px;
+    line-height: 1.65;
+    text-align: left;
   }
 }

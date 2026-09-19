@@ -33,7 +33,7 @@ const pistas = [
   { archivo: 'audios/payaso.mp3', nombre: 'Payaso' },
   { archivo: 'audios/contigo no.mp3', nombre: 'Contigo No' },
   { archivo: 'audios/el (him).mp3', nombre: 'Él (Him)' },
-  { archivo: 'audios/te quiero tal como eres.mp3', nombre: 'Te Quiero Tal Como Eres' },
+  { archivo: 'audios/el triste.mp3', nombre: 'El Triste' },
   { archivo: 'audios/tu me estas volviendo loco.mp3', nombre: 'Tú Me Estás Volviendo Loco' },
   { archivo: 'audios/vamos a darnos tiempo.mp3', nombre: 'Vamos a Darnos Tiempo' },
   { archivo: 'audios/volcan.mp3', nombre: 'Volcán' },
@@ -60,62 +60,60 @@ let audioFondo;                 // <audio> actual (la canción que suena ahora)
 let audioFondoSiguiente = null; // <audio> de la siguiente canción (solo durante el fundido)
 let crossfadeActivo = false;    // evita que se dispare más de un fundido a la vez
 let intervaloCrossfade = null;  // referencia al setInterval que ajusta el volumen
-let colaReproduccion = [];      // cola aleatoria de índices
+let colaReproduccion = [];      // cola con los índices que faltan por sonar
 let indiceActual = -1;          // índice de la canción que manda ahora
 
-// ---------- COLA ALEATORIA ----------
-// Mezcla Fisher-Yates: desordena el arreglo al azar, sin sesgos.
-function mezclarFisherYates(arr) {
-  const shuffled = arr.slice();
-  for (let i = shuffled.length - 1; i > 0; i--) {
+// ---------- COLA DE REPRODUCCIÓN (SIN REPETICIONES) ----------
+// Usamos una COLA, que es una estructura FIFO: "el primero que entra es el
+// primero que sale". Es como una fila de personas.
+//
+//   1. Se barajan las 20 canciones y se meten en la cola.
+//   2. Para poner una canción se saca la PRIMERA de la cola (shift).
+//   3. Como la canción sale de la cola al sonar, ya no puede volver a
+//      aparecer hasta que la cola se vacíe; o sea, hasta que suenen las 20.
+//   4. Cuando la cola queda vacía, se vuelve a llenar barajando de nuevo.
+//
+// Con esto se cumple la regla: una canción no se repite hasta recorrer
+// todas las demás, tanto si avanza sola como si el usuario cambia de pista.
+
+// Baraja un arreglo con el algoritmo Fisher-Yates (el clásico para mezclar
+// de forma justa): recorre de atrás hacia adelante e intercambia cada
+// posición con otra al azar de las anteriores.
+function barajar(arreglo) {
+  const copia = arreglo.slice();
+  for (let i = copia.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = shuffled[i];
-    shuffled[i] = shuffled[j];
-    shuffled[j] = temp;
+    const temporal = copia[i];
+    copia[i] = copia[j];
+    copia[j] = temporal;
   }
-  return shuffled;
+  return copia;
 }
 
-// Devuelve true si dos canciones vecinas de la lista original (|a-b|===1)
-// quedaron contiguas en la cola. Sirve para dispersar las canciones del
-// setlist y que la mezcla no suene "agrupada".
-function tieneVecinosAdyacentes(arr) {
-  for (let k = 0; k < arr.length - 1; k++) {
-    if (Math.abs(arr[k] - arr[k + 1]) === 1) {
-      return true;
-    }
+// Llena la cola con las 20 canciones barajadas. Si recibe "ultimaCancion",
+// se asegura de que esa canción no quede la primera de la cola, para no
+// repetir de inmediato la última que sonó al cerrar un ciclo.
+function llenarCola(ultimaCancion) {
+  const indices = pistas.map((_, i) => i); // [0, 1, 2, ... , 19]
+  const barajados = barajar(indices);
+
+  if (ultimaCancion >= 0 && barajados.length > 1 && barajados[0] === ultimaCancion) {
+    const posicion = 1 + Math.floor(Math.random() * (barajados.length - 1));
+    const temporal = barajados[0];
+    barajados[0] = barajados[posicion];
+    barajados[posicion] = temporal;
   }
-  return false;
+
+  colaReproduccion = barajados;
 }
 
-// Genera una cola aleatoria de índices (0..n-1), re-mezclando con límite
-// de intentos para evitar vecinos de la playlist, y excluye que la primera
-// sea la misma canción que acaba de sonar.
-function generarColaAleatoria(excluirUltimo) {
-  const indices = pistas.map((_, i) => i);
-  let shuffled = mezclarFisherYates(indices);
-
-  let intentos = 0;
-  while (tieneVecinosAdyacentes(shuffled) && intentos < 30) {
-    shuffled = mezclarFisherYates(indices);
-    intentos += 1;
-  }
-
-  if (excluirUltimo && shuffled[0] === indiceActual && shuffled.length > 1) {
-    const temp = shuffled[0];
-    shuffled[0] = shuffled[shuffled.length - 1];
-    shuffled[shuffled.length - 1] = temp;
-  }
-
-  return shuffled;
-}
-
-// Saca el siguiente índice de la cola; si la cola se agotó, la regenera.
-function seleccionarSiguienteCancion() {
+// Saca la siguiente canción de la cola. Si la cola está vacía (ya sonaron
+// todas), primero la vuelve a llenar.
+function sacarSiguienteCancion() {
   if (colaReproduccion.length === 0) {
-    colaReproduccion = generarColaAleatoria(true);
+    llenarCola(indiceActual);
   }
-  return colaReproduccion.shift();
+  return colaReproduccion.shift(); // saca y devuelve el primero de la cola
 }
 
 // ---------- INTERFAZ DEL BOTÓN ----------
@@ -179,7 +177,7 @@ function alTerminarCancion() {
 function iniciarCrossfade() {
   if (crossfadeActivo) return;
 
-  const siguienteIndice = seleccionarSiguienteCancion();
+  const siguienteIndice = sacarSiguienteCancion();
   anunciarPistaActiva(siguienteIndice); // el botón muestra ya la canción nueva
 
   // Nuevo <audio> en silencio (volumen 0): no se oye hasta que el fundido
@@ -261,7 +259,7 @@ async function intentarReproducir() {
 
 // ---------- ARRANQUE ----------
 // Se descarga SOLO la primera canción de la cola (el resto no se toca).
-indiceActual = seleccionarSiguienteCancion();
+indiceActual = sacarSiguienteCancion();
 anunciarPistaActiva(indiceActual);
 audioFondo = new Audio(pistas[indiceActual].archivo);
 audioFondo.volume = VOLUMEN_BASE;
@@ -314,7 +312,7 @@ function avanzarCancion() {
   audioFondo.pause();
   cancelarCrossfade();
 
-  const siguienteIndice = seleccionarSiguienteCancion();
+  const siguienteIndice = sacarSiguienteCancion();
   anunciarPistaActiva(siguienteIndice); // el título del botón se actualiza
 
   // Al asignar un src nuevo, el navegador descarta la pista vieja y
