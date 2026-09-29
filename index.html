@@ -37,13 +37,14 @@
          La foto se declara tal cual, en vertical (736x1085): cada red
          la recorta al formato de su propia tarjeta y no hay etiqueta
          para forzar ese recorte, así que basta con declarar las medidas
-         reales. El `?v=1` es de "caché": Facebook y WhatsApp guardan la
-         imagen para siempre, y subir el número es lo único que hace que
-         vuelvan a descargarla cuando cambias el archivo.
+         reales. OJO si algún día cambias el archivo .jpg: Facebook y
+         WhatsApp lo guardan en caché para siempre y, como la URL no
+         cambia, seguirán mostrando el viejo. La salida es añadirle un
+         `?v=2` (y subir el número) a las dos etiquetas de imagen.
          ========================================================== -->
     <meta property="og:title" content="José José | Homenaje" />
     <meta property="og:description" content="Seré quien todo lo dio por triunfar." />
-    <meta property="og:image" content="https://elprincipejosejose.vercel.app/assets/og/jose-jose-blanco-negro.jpg?v=1" />
+    <meta property="og:image" content="https://elprincipejosejose.vercel.app/assets/og/jose-jose-blanco-negro.jpg" />
     <meta property="og:image:width" content="736" />
     <meta property="og:image:height" content="1085" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -61,7 +62,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="José José | Homenaje" />
     <meta name="twitter:description" content="Seré quien todo lo dio por triunfar." />
-    <meta name="twitter:image" content="https://elprincipejosejose.vercel.app/assets/og/jose-jose-blanco-negro.jpg?v=1" />
+    <meta name="twitter:image" content="https://elprincipejosejose.vercel.app/assets/og/jose-jose-blanco-negro.jpg" />
     <meta name="twitter:image:alt" content="José José en blanco y negro" />
 
     <!-- Fuentes de Google: conectamos al servidor y cargamos dos familias. -->
